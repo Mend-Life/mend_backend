@@ -11,9 +11,14 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 from pathlib import Path
+from dotenv import load_dotenv
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Load environment variables from .env.local
+load_dotenv(BASE_DIR / '.env.local')
 
 
 # Quick-start development settings - unsuitable for production
@@ -77,11 +82,11 @@ WSGI_APPLICATION = 'mend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'mend_db',
-        'USER': 'mend_user',
-        'PASSWORD': 'Omos123456',  # Change this to a secure password
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'NAME': os.getenv('DB_NAME', 'mend'),
+        'USER': os.getenv('DB_USER', 'mend_user'),
+        'PASSWORD': os.getenv('DB_PASSWORD', '12345'),
+        'HOST': os.getenv('DB_HOST', '127.0.0.1'),
+        'PORT': os.getenv('DB_PORT', '5432'),
     }
 }
 
